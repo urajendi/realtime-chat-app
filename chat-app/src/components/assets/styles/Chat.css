@@ -1,15 +1,43 @@
 .chatLog{
     width: 100%;
     height: 100%;
-    overflow-y: auto;
 }
 
-.chatItem{
+.chatItemAnimate{
     animation: slide-up 0.4s ease;
 }
 
-.user{
+.cardView{
+    display: flex;
+    align-items: center;
+    align-self: flex-start;
+}
+
+.currentDir{
+    flex-direction: row-reverse;
+}
+
+.otherDir{
+    flex-direction: row;
+}
+
+/* .user{
     font-weight: 600;
+} */
+
+.userIcon{
+    flex: 0 1 6%;
+    display: flex;
+    flex-direction: column;
+}
+
+.userIconMobile{
+    width: 8%;
+    height: 8%;
+}
+.userIconDesktop{
+    width: 5%;
+    height: 5%;
 }
 
 .cardMessage{

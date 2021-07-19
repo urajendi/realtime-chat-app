@@ -7,6 +7,10 @@ import './components/assets/styles/MobileLayout.css';
 import './components/assets/styles/ChatWindow.css';
 import './components/assets/styles/Chat.css';
 
+// importing user-icons
+import userAIcon from './components/assets/icons/userAIcon.png';
+import userBIcon from './components/assets/icons/userBIcon.png';
+
 const client = new W3CWebSocket('ws://127.0.0.1:8000');
 
 // OnClick Event Handlers
@@ -61,9 +65,9 @@ function onEnterHandlerB(event) {
 function userToClass(user, currentChatWindow) {
   var userClass = '';
   if (user === 'A') {
-    userClass = "MsgClassA chatItem card";
+    userClass = "MsgClassA chatItemAnimate card";
   } else {
-    userClass = "MsgClassB chatItem card";
+    userClass = "MsgClassB chatItemAnimate card";
   }
   if (currentChatWindow === user) {
     userClass = userClass + " currentChat";
@@ -73,9 +77,31 @@ function userToClass(user, currentChatWindow) {
   return userClass;
 }
 
+// Convert find userIcon class
+function findUserIconClass(user, currentChatWindow, currentView) {
+  var userClass = 'userIcon chatItemAnimate';
+  if (currentChatWindow === user) {
+    userClass = userClass + " currentChat ";
+  } else {
+    userClass = userClass + " otherChat ";
+  }
+  return userClass + currentView;
+}
+
+// Convert find chat direction
+function findChatDirection(user, currentChatWindow) {
+  var userClass = 'cardView';
+  if (currentChatWindow === user) {
+    userClass = userClass + " currentDir";
+  } else {
+    userClass = userClass + " otherDir";
+  }
+  return userClass;
+}
+
 // Convert currentWindow to Class at run-time
-function currentWindowToClass(stateWindow, currentWindow){
-  if(stateWindow===currentWindow){
+function currentWindowToClass(stateWindow, currentWindow) {
+  if (stateWindow === currentWindow) {
     return "tab-item currentWindow";
   } else {
     return "tab-item otherWindow";
@@ -83,23 +109,32 @@ function currentWindowToClass(stateWindow, currentWindow){
 }
 
 // Convert currentWindow to Class at run-time
-function currentWindowToButtonClass(stateWindow, currentWindow){
-  if(stateWindow===currentWindow){
+function currentWindowToButtonClass(stateWindow, currentWindow) {
+  if (stateWindow === currentWindow) {
     return "tab-btn btn currentButton";
   } else {
     return "tab-btn btn";
   }
 }
 
-// Calculate current user
-function findMsgOwner(user, currentChatWindow) {
-  var currentUser = '';
-  if (currentChatWindow === user) {
-    currentUser = "You";
+// // Calculate current user
+// function findMsgOwner(user, currentChatWindow) {
+//   var currentUser = '';
+//   if (currentChatWindow === user) {
+//     currentUser = "You";
+//   } else {
+//     currentUser = user;
+//   }
+//   return currentUser;
+// }
+
+// Calculate user Icon source
+function findUserIconSrc(user) {
+  if (user === 'A') {
+    return userAIcon;
   } else {
-    currentUser = user;
+    return userBIcon;
   }
-  return currentUser;
 }
 
 // Rendering Mobile View Chat
@@ -111,8 +146,14 @@ function ChatWindow(props) {
         <div id="msgContainerA" className="sessionChatMobile">
           <div className="chatLog">
             {props.state.messages.map((msg, index) =>
-              <div className={userToClass(msg.user, 'A')} key={index}>
-                <p className="cardMessage"><span className="user">{findMsgOwner(msg.user, 'A')}:</span> {msg.msg}</p>
+              <div className={findChatDirection(msg.user, 'A')} key={index}>
+                <img className={findUserIconClass(msg.user, 'A', 'userIconMobile')} src={findUserIconSrc(msg.user)} alt="userIcon" />
+                <div className={userToClass(msg.user, 'A')}>
+                  <p className="cardMessage">
+                    {/* <span className="user">{findMsgOwner(msg.user, 'A')}:</span> */}
+                    {msg.msg}
+                  </p>
+                </div>
               </div>
             )}
           </div>
@@ -129,8 +170,14 @@ function ChatWindow(props) {
         <div id="msgContainerB" className="sessionChatMobile">
           <div className="chatLog">
             {props.state.messages.map((msg, index) =>
-              <div className={userToClass(msg.user, 'B')} key={index}>
-                <p className="cardMessage"><span className="user">{findMsgOwner(msg.user, 'B')}:</span> {msg.msg}</p>
+              <div className={findChatDirection(msg.user, 'B')} key={index}>
+                <img className={findUserIconClass(msg.user, 'B', 'userIconMobile')} src={findUserIconSrc(msg.user)} alt="userIcon" />
+                <div className={userToClass(msg.user, 'B')}>
+                  <p className="cardMessage">
+                    {/* <span className="user">{findMsgOwner(msg.user, 'B')}:</span> */}
+                    {msg.msg}
+                  </p>
+                </div>
               </div>
             )}
           </div>
@@ -239,8 +286,17 @@ export class App extends Component {
             <div id="msgContainerA" className="sessionChat">
               <div className="chatLog">
                 {this.state.messages.map((msg, index) =>
-                  <div className={userToClass(msg.user, 'A')} key={index}>
-                    <p className="cardMessage"><span className="user">{findMsgOwner(msg.user, 'A')}:</span> {msg.msg}</p>
+                  // <div className={userToClass(msg.user, 'A')} key={index}>
+                  //   <p className="cardMessage"><span className="user">{findMsgOwner(msg.user, 'A')}:</span> {msg.msg}</p>
+                  // </div>
+                  <div className={findChatDirection(msg.user, 'A')} key={index}>
+                    <img className={findUserIconClass(msg.user, 'A', 'userIconDesktop')} src={findUserIconSrc(msg.user)} alt="userIcon" />
+                    <div className={userToClass(msg.user, 'A')}>
+                      <p className="cardMessage">
+                        {/* <span className="user">{findMsgOwner(msg.user, 'A')}:</span> */}
+                        {msg.msg}
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>
@@ -258,8 +314,17 @@ export class App extends Component {
             <div id="msgContainerB" className="sessionChat">
               <div className="chatLog">
                 {this.state.messages.map((msg, index) =>
-                  <div className={userToClass(msg.user, 'B')} key={index}>
-                    <p className="cardMessage"><span className="user">{findMsgOwner(msg.user, 'B')}:</span> {msg.msg}</p>
+                  // <div className={userToClass(msg.user, 'B')} key={index}>
+                  //   <p className="cardMessage"><span className="user">{findMsgOwner(msg.user, 'B')}:</span> {msg.msg}</p>
+                  // </div>
+                  <div className={findChatDirection(msg.user, 'B')} key={index}>
+                    <img className={findUserIconClass(msg.user, 'B', 'userIconDesktop')} src={findUserIconSrc(msg.user)} alt="userIcon" />
+                    <div className={userToClass(msg.user, 'B')}>
+                      <p className="cardMessage">
+                        {/* <span className="user">{findMsgOwner(msg.user, 'B')}:</span> */}
+                        {msg.msg}
+                      </p>
+                    </div>
                   </div>
                 )}
               </div>
