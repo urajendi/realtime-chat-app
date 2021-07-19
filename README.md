@@ -57,7 +57,7 @@ kill -9 *PID*
 ## Screenshots
 
 * **Desktop Layout** for the chat-app:
-* <img width="500" alt="Preview" src="https://github.com/urajendi/realtime-chat-app/blob/main/screenshots/DesktopLayoutV2.png">
+&emsp<img width="500" alt="Preview" src="https://github.com/urajendi/realtime-chat-app/blob/main/screenshots/DesktopLayoutV2.png">
 
 * **Mobile Layout** for the chat-app:
-* <img width="500" alt="Preview" src="https://github.com/urajendi/realtime-chat-app/blob/main/screenshots/MobileLayoutV2.png">
+&emsp<img width="500" alt="Preview" src="https://github.com/urajendi/realtime-chat-app/blob/main/screenshots/MobileLayoutV2.png">
