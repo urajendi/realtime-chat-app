@@ -1,0 +1,27 @@
+.desktopLayout{
+    display: flex;
+    background-color: var(--bg-color);
+    background-image: linear-gradient(rgba(255,213,227,1),rgba(255,221,232,1),rgba(255,248,250,1),rgba(255,248,250,1),rgba(255,221,232,1),rgba(255,213,227,1));
+}
+
+.ChatWindowDesktop{
+    width: calc(50% - 30px);
+    height: calc(100vh - 30px);
+    border: 2px solid var(--border-color);
+    margin-top: 15px;
+    margin-bottom: 15px;
+    position: relative;
+    flex-flow: column;
+    display: flex;
+}
+
+.WindowADesktop{
+    flex: 1;
+    margin-left: 15px;
+    margin-right: 7.5px;
+}
+.WindowBDesktop{
+    flex: 1;
+    margin-left: 7.5px;
+    margin-right: 15px;
+}
